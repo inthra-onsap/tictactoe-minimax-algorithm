@@ -1,4 +1,3 @@
 # TicTacToe (Minimax-Alpha_Beta_pruning)
 
-[screenshot]: https://github.com/inthra-onsap/tictactoe-minimax-algorithm/tree/master/game_engine/images/sample.png "Sample Screenshot"
-
+![alt text](https://raw.githubusercontent.com/inthra-onsap/tictactoe-minimax-algorithm/master/image/sample.png "Logo Title Text 1")
