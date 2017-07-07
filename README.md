@@ -1,1 +1,1 @@
-# TicTacToe (Minimax-Beta_Alpha_pruning)
+# TicTacToe (Minimax-Alpha_Beta_pruning)
