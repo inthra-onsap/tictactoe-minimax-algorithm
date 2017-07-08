@@ -20,8 +20,8 @@ void Game::Start() {
 }
 
 bool Game::IsFull() {
-  for (int i = 1; i < state.size(); ++i)
-    if (state[i] == 0)
+  for (int idx = 1; idx < state.size(); ++idx)
+    if (state[idx] == 0)
       return false;
   return true;
 };
@@ -112,7 +112,7 @@ std::string Game::GetResultMessage() {
 }
 
 bool Game::IsValid(int pos) {
-  return (pos < 1 || pos > 9 || state[pos] == 0);
+  return (pos >= 1 && pos <= 9 && state[pos] == 0);
 }
 
 void Game::Place(int pos, Symbol symbol) {
