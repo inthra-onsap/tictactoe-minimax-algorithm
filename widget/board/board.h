@@ -15,6 +15,8 @@ class Board {
 
   void RenderHeader();
 
+  void RenderSampleBoard();
+
   void RenderFooter(std::string text);
 
   void Render(Symbol human, Symbol bot, std::vector<int> state);

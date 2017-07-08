@@ -13,6 +13,22 @@ void Board::RenderFooter(std::string text) {
   std::cout << "***************" << std::endl;
 }
 
+void Board::RenderSampleBoard() {
+  std::cout << std::endl;
+  for (int row = 1; row <= 9; row += 3) {
+    std::cout << "\t\t ";
+    for (int col = 0; col < 3; ++col) {
+      int pos = row + col;
+      std::cout << pos;
+      if (col == 0 || col == 1)
+        std::cout << " | ";
+    }
+    if (row == 1 || row == 4)
+      std::cout << "\n\t\t ---------\n";
+  }
+  std::cout << std::endl;
+}
+
 void Board::Render(Symbol human, Symbol bot, std::vector<int> state) {
   char symbol;
   std::cout << std::endl;
@@ -20,11 +36,11 @@ void Board::Render(Symbol human, Symbol bot, std::vector<int> state) {
     std::cout << "\t\t ";
     for (int col = 0; col < 3; ++col) {
       int pos = row + col;
-      if (state[pos] == 0) {
-        std::cout << pos;
-      } else {
+      if (state[pos] != 0) {
         symbol = (state[pos] == human.GetSymbolInt()) ? human.GetSymbol() : bot.GetSymbol();
         std::cout << symbol;
+      } else {
+        std::cout << " ";
       }
       if (col == 0 || col == 1)
         std::cout << " | ";

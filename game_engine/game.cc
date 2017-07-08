@@ -4,7 +4,7 @@ void Game::Start() {
   int human_input;
 
   board.RenderHeader();
-  board.Render(human_sym, robot_sym, GetState());
+  board.RenderSampleBoard();
   while (!IsOver()) {
     std::cout << "Choose: ";
     std::cin >> human_input;
