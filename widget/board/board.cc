@@ -15,17 +15,11 @@ void Board::RenderFooter(std::string text) {
 
 void Board::RenderSampleBoard() {
   std::cout << std::endl;
-  for (int row = 1; row <= 9; row += 3) {
-    std::cout << "\t\t ";
-    for (int col = 0; col < 3; ++col) {
-      int pos = row + col;
-      std::cout << pos;
-      if (col == 0 || col == 1)
-        std::cout << " | ";
-    }
-    if (row == 1 || row == 4)
-      std::cout << "\n\t\t ---------\n";
-  }
+  std::cout << "\t\t 1 | 2 | 3\n";
+  std::cout << "\t\t ---------\n";
+  std::cout << "\t\t 4 | 5 | 6\n";
+  std::cout << "\t\t ---------\n";
+  std::cout << "\t\t 7 | 8 | 9\n";
   std::cout << std::endl;
 }
 

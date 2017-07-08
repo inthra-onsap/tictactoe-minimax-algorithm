@@ -6,7 +6,7 @@ void Game::Start() {
   board.RenderHeader();
   board.RenderSampleBoard();
   while (!IsOver()) {
-    std::cout << "Choose: ";
+    std::cout << "Place: ";
     std::cin >> human_input;
     if (IsValid(human_input)) {
       Place(human_input, human_sym);
@@ -26,7 +26,7 @@ bool Game::IsFull() {
   return true;
 };
 
-int Game::GetWinner() {
+int Game::FindWinner() {
   for (int row = 1; row < 9; row += 3)
     if (state[row] == state[row + 1] && state[row + 1] == state[row + 2] && state[row] != 0)
       return (state[row] == robot_sym.GetSymbolInt()) ? robot_sym.GetSymbolInt() : human_sym.GetSymbolInt();
@@ -40,8 +40,8 @@ int Game::GetWinner() {
   return 0;
 }
 
-int Game::Minimax(bool is_max) {
-  int winner = GetWinner();
+int Game::Minimax(bool is_max, int alpha, int beta) {
+  int winner = FindWinner();
   int best_score;
 
   if (winner != 0) {
@@ -54,18 +54,18 @@ int Game::Minimax(bool is_max) {
     if (is_max) {
       best_score = INT_MIN;
       for (int i = 1; i < state.size(); ++i) {
-        if (state[i] == 0) {
+        if (state[i] == 0 && best_score < beta) {
           state[i] = robot_sym.GetSymbolInt();
-          best_score = std::max(best_score, Minimax(!is_max));
+          best_score = std::max(best_score, Minimax(!is_max, best_score, beta));
           state[i] = 0;
         }
       }
     } else {
       best_score = INT_MAX;
       for (int i = 1; i < state.size(); ++i) {
-        if (state[i] == 0) {
+        if (state[i] == 0 && best_score > alpha) {
           state[i] = human_sym.GetSymbolInt();
-          best_score = std::min(best_score, Minimax(!is_max));
+          best_score = std::min(best_score, Minimax(!is_max, alpha, best_score));
           state[i] = 0;
         }
       }
@@ -76,15 +76,18 @@ int Game::Minimax(bool is_max) {
 
 int Game::FindBestMove() {
   int best_score = INT_MIN;
+  int alpha = INT_MIN;
+  int beta = INT_MAX;
   int best_move = 0;
-  for (int i = 1; i <= state.size(); ++i) {
-    if (state[i] == 0) {
-      state[i] = robot_sym.GetSymbolInt();
-      int score = Minimax(false);
-      state[i] = 0;
+  for (int idx = 1; idx <= state.size(); ++idx) {
+    if (state[idx] == 0) {
+      state[idx] = robot_sym.GetSymbolInt();
+      int score = Minimax(false, alpha, beta);
+      state[idx] = 0;
       if (score > best_score) {
+        alpha = score;
         best_score = score;
-        best_move = i;
+        best_move = idx;
       }
     }
   }
@@ -92,7 +95,7 @@ int Game::FindBestMove() {
 }
 
 bool Game::IsOver() {
-  if (IsFull() || GetWinner() != 0) {
+  if (IsFull() || FindWinner() != 0) {
     return true;
   }
   return false;
@@ -103,7 +106,7 @@ std::vector<int> Game::GetState() {
 }
 
 std::string Game::GetResultMessage() {
-  int winner = GetWinner();
+  int winner = FindWinner();
   if (winner != 0) {
     return (winner == human_sym.GetSymbolInt()) ? "You Win!" : "You Lose!";
   } else {

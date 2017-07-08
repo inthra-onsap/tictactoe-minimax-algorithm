@@ -26,9 +26,9 @@ class Game {
 
   bool IsFull();
 
-  int GetWinner();
+  int FindWinner();
 
-  int Minimax(bool is_max);
+  int Minimax(bool is_max, int alpha, int beta);
 
   int FindBestMove();
 
